@@ -1,0 +1,24 @@
+spring:
+  application:
+    name: safenotes
+  datasource:
+    username: safenotes
+    password: safenotes
+    url: jdbc:postgresql://localhost:5432/safenotesdb
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    open-in-view: false
+    show-sql: true
+    hibernate:
+     ddl-auto: update
+
+jwt:
+  public:
+    key: classpath:app.pub
+  private:
+    key: classpath:app.key
+  issuer: safenotes
+  expires-in: 300
+  refresh:
+    expires-in: 2592000
+
