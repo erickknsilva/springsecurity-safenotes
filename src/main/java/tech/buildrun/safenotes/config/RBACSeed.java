@@ -40,9 +40,9 @@ public class RBACSeed implements CommandLineRunner {
         Role userRole = ensureRole("USER", Set.of(readScope, writeScope, profileRead));
 
         // 3 - criar os usuarios e associar os papeis
-        ensureUser("erick", "senha", userViewer);
-        ensureUser("bruno", "senha", userViewer);
-        ensureUser("emily", "senha", userRole);
+        ensureUser("emily", "senha", userViewer);
+        ensureUser("erick", "senha", userRole);
+        ensureUser("bruno", "senha", userRole);
 
     }
 
