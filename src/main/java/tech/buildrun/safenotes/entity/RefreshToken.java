@@ -20,7 +20,7 @@ public class RefreshToken {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID jti;
 
-    @Column(name = "family_id", nullable = false)
+    @Column(name = "family_id",unique = true, nullable = false)
     private UUID familyId;
 
     @Column(name = "opaque_hash", unique = true, nullable = false)
@@ -39,4 +39,11 @@ public class RefreshToken {
     @Column(name = "revoked_at")
     private Instant revokedAt;
 
+    public RefreshToken(UUID familyId, String opaqueHash, User user, Instant issuedAt, Instant expiresAt) {
+        this.familyId = familyId;
+        this.opaqueHash = opaqueHash;
+        this.user = user;
+        this.issuedAt = issuedAt;
+        this.expiresAt = expiresAt;
+    }
 }
