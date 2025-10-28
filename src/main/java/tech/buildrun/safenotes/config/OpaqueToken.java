@@ -12,6 +12,7 @@ public class OpaqueToken {
         var bytes = KeyGenerators.secureRandom(32).generateKey();
         return Base64.getUrlEncoder().withoutPadding().encodeToString(bytes);
     }
+
     public static String generateOpaqueHash(String opaqueToken) {
         return DigestUtils.sha256Hex(opaqueToken);
     }
