@@ -1,4 +1,6 @@
 spring:
+  main:
+    banner-mode: off
   application:
     name: safenotes
   datasource:
@@ -18,7 +20,7 @@ jwt:
   private:
     key: classpath:app.key
   issuer: safenotes
-  expires-in: 300
+  expires-in: 10000
   refresh:
     expires-in: 2592000
 

@@ -27,4 +27,10 @@ public class Note {
     @JoinColumn(name = "owner_id", nullable = false)
     private User owner;
 
+    public Note(String title, String content, User owner) {
+        this.title = title;
+        this.content = content;
+        this.owner = owner;
+    }
+
 }
