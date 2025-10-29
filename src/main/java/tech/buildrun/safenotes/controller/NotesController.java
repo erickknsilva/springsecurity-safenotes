@@ -42,7 +42,8 @@ public class NotesController {
     @PutMapping("/{noteId}")
     @PreAuthorize(("hasAuthority('SCOPE_NOTE:WRITE') and @noteAuthz.hasAccessToNote(#jwt, #noteId)"))
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void updateNote(@P("jwt") @AuthenticationPrincipal Jwt jwt, @P("noteId") @PathVariable Long noteId, @RequestBody NoteRequest noteRequest) {
+    public void updateNote(@P("jwt") @AuthenticationPrincipal Jwt jwt, @P("noteId") @PathVariable Long noteId,
+                           @RequestBody NoteRequest noteRequest) {
 
         noteService.updateNote(noteId, noteRequest);
     }

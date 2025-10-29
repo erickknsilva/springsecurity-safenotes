@@ -1,0 +1,27 @@
+meta {
+  name: /notes - deleta a nota
+  type: http
+  seq: 10
+}
+
+delete {
+  url: http://localhost:8080/notes/1
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{token}}
+}
+
+script:post-response {
+  const body = res.getBody();
+  bru.setEnvVar("token", body.accessToken);
+  
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+}

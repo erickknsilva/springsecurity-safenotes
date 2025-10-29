@@ -1,0 +1,34 @@
+meta {
+  name: /notes - atualizar as notas
+  type: http
+  seq: 9
+}
+
+put {
+  url: http://localhost:8080/notes/4
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{token}}
+}
+
+body:json {
+  {
+      "title": "Compras do Mercado",
+      "content": "Arroz, feijão, olheo, macarração."
+  }
+}
+
+script:post-response {
+  const body = res.getBody();
+  bru.setEnvVar("token", body.accessToken);
+  
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+}

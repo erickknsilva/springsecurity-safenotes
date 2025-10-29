@@ -1,0 +1,26 @@
+meta {
+  name: auth/logout-all- desloga o usuario de todos dispositivos
+  type: http
+  seq: 5
+}
+
+post {
+  url: http://localhost:8080/auth/logout-all
+  body: json
+  auth: none
+}
+
+script:post-response {
+  const json = res.getBody();
+  bru.setEnvVar("accessToken", json.accessToken);
+  bru.setEnvVar("refreshToken", json.refreshToken);
+  
+  
+  
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+}

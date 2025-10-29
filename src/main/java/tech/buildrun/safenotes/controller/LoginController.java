@@ -31,7 +31,6 @@ public class LoginController {
     @ResponseStatus(HttpStatus.OK)
     public LoginResponse login(@RequestBody LoginRequest loginRequest) {
 
-        // Implement login logic here
         return loginService.login(loginRequest.username(), loginRequest.password());
     }
 
@@ -44,8 +43,14 @@ public class LoginController {
     }
 
     @PostMapping("/logout")
-    public ResponseEntity<LoginResponse> logout(@AuthenticationPrincipal Jwt jwt, @RequestBody LogoutRequest request){
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void logout(@AuthenticationPrincipal Jwt jwt, @RequestBody LogoutRequest request){
         logoutService.logout(jwt, request);
+    }
+
+    @PostMapping("/logout-all")
+    public ResponseEntity<LoginResponse> logoutAllDevices(@AuthenticationPrincipal Jwt jwt){
+        logoutService.logoutAll(Long.parseLong(jwt.getSubject()));
         return ResponseEntity.noContent().build();
     }
 

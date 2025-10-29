@@ -1,0 +1,21 @@
+meta {
+  name: me - perfil usuario
+  type: http
+  seq: 5
+}
+
+get {
+  url: http://localhost:8080/me
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{token}}
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+}

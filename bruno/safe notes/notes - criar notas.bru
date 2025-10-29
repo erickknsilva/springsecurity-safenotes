@@ -1,0 +1,34 @@
+meta {
+  name: /notes - criar notas
+  type: http
+  seq: 3
+}
+
+post {
+  url: http://localhost:8080/notes
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{token}}
+}
+
+body:json {
+  {
+      "title": "Minha Lista",
+      "content": "Banana, Maça, Uva"
+  }
+}
+
+script:post-response {
+  const body = res.getBody();
+  bru.setEnvVar("token", body.accessToken);
+  
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+}

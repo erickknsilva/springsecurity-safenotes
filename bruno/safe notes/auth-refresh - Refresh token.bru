@@ -1,0 +1,33 @@
+meta {
+  name: auth/refresh - Refresh token
+  type: http
+  seq: 2
+}
+
+post {
+  url: http://localhost:8080/auth/refresh
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+      "refreshToken": "Sty3XpK-C0yxgLzL-oFs3W3cbEzn67v6I1L4-02yupQ"
+  }
+}
+
+vars:pre-request {
+  ~tokenn: res.body.accessToken
+}
+
+script:post-response {
+  const body = res.getBody();
+  bru.setEnvVar("token", body.accessToken);
+  
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+}

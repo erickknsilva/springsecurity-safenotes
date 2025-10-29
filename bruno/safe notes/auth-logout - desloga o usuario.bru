@@ -1,0 +1,36 @@
+meta {
+  name: auth/logout - desloga o usuario
+  type: http
+  seq: 4
+}
+
+post {
+  url: http://localhost:8080/auth/logout
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{token}}
+}
+
+body:json {
+  {
+    "refreshToken": "47fHjM33Vb_XU7_JTQsn8P877nluV3oWrJltwQLJ2zA"
+  }
+}
+
+script:post-response {
+  const json = res.getBody();
+  bru.setEnvVar("accessToken", json.accessToken);
+  bru.setEnvVar("refreshToken", json.refreshToken);
+  
+  
+  
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+}

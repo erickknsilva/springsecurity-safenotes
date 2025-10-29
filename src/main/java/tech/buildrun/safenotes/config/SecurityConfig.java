@@ -18,6 +18,7 @@ import org.springframework.security.oauth2.jwt.JwtDecoder;
 import org.springframework.security.oauth2.jwt.JwtEncoder;
 import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
 import org.springframework.security.oauth2.jwt.NimbusJwtEncoder;
+import org.springframework.security.oauth2.server.resource.web.authentication.BearerTokenAuthenticationFilter;
 import org.springframework.security.web.SecurityFilterChain;
 import tech.buildrun.safenotes.utils.JwtBlocklistValidator;
 
@@ -27,9 +28,11 @@ import tech.buildrun.safenotes.utils.JwtBlocklistValidator;
 public class SecurityConfig {
 
     private final JwtConfig jwtConfig;
+    private final TokenVersionFilter tokenVersionFilter;
 
-    public SecurityConfig(JwtConfig jwtConfig) {
+    public SecurityConfig(JwtConfig jwtConfig, TokenVersionFilter tokenVersionFilter) {
         this.jwtConfig = jwtConfig;
+        this.tokenVersionFilter = tokenVersionFilter;
     }
 
     @Bean
@@ -37,13 +40,15 @@ public class SecurityConfig {
 
         http.authorizeHttpRequests(auth -> {
                     auth.requestMatchers(HttpMethod.POST, "/auth/login").permitAll()
-                            .requestMatchers(HttpMethod.POST,"/auth/refresh").permitAll()
+                            .requestMatchers(HttpMethod.POST, "/auth/refresh").permitAll()
                             .anyRequest().authenticated();
                 })
                 .csrf(AbstractHttpConfigurer::disable)
                 .cors(AbstractHttpConfigurer::disable)
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .oauth2ResourceServer(oauth -> oauth.jwt(Customizer.withDefaults()));
+                .oauth2ResourceServer(oauth -> oauth.jwt(Customizer.withDefaults()))
+                .addFilterAfter(tokenVersionFilter, BearerTokenAuthenticationFilter.class);
+
         return http.build();
     }
 
@@ -55,11 +60,6 @@ public class SecurityConfig {
         return decoder;
     }
 
-//    @Bean
-//    public JwtDecoder jwtDecoder() {
-//        // Configure the JWT decoder with the public key from JwtConfig
-//        return NimbusJwtDecoder.withPublicKey(jwtConfig.getPublicKey()).build();
-//    }
 
     @Bean
     public JwtEncoder jwtEncoder() {
