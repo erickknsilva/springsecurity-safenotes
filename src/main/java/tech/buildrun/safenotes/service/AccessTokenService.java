@@ -25,7 +25,6 @@ public class AccessTokenService {
         this.jwtEncoder = jwtEncoder;
     }
 
-
     public Jwt generateAccessToken(User user, UUID familyId) {
 
         // 1 - recuperar as roles do usuario

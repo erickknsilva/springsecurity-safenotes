@@ -19,6 +19,7 @@ import org.springframework.security.oauth2.jwt.JwtEncoder;
 import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
 import org.springframework.security.oauth2.jwt.NimbusJwtEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import tech.buildrun.safenotes.utils.JwtBlocklistValidator;
 
 @Configuration
 @EnableWebSecurity
@@ -46,11 +47,19 @@ public class SecurityConfig {
         return http.build();
     }
 
+
     @Bean
-    public JwtDecoder jwtDecoder() {
-        // Configure the JWT decoder with the public key from JwtConfig
-        return NimbusJwtDecoder.withPublicKey(jwtConfig.getPublicKey()).build();
+    public JwtDecoder jwtDecoder(JwtBlocklistValidator validator) {
+        NimbusJwtDecoder decoder = NimbusJwtDecoder.withPublicKey(jwtConfig.getPublicKey()).build();
+        decoder.setJwtValidator(validator);
+        return decoder;
     }
+
+//    @Bean
+//    public JwtDecoder jwtDecoder() {
+//        // Configure the JWT decoder with the public key from JwtConfig
+//        return NimbusJwtDecoder.withPublicKey(jwtConfig.getPublicKey()).build();
+//    }
 
     @Bean
     public JwtEncoder jwtEncoder() {

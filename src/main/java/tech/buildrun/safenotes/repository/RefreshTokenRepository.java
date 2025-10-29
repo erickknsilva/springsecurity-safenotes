@@ -24,4 +24,7 @@ public interface RefreshTokenRepository extends JpaRepository<RefreshToken, UUID
     @Modifying
     @Query("UPDATE RefreshToken r SET r.revokedAt = :revokedAt  where r.opaqueHash = :opaqueHash AND r.revokedAt IS NULL")
     int revokedIfNotRevoked(Instant revokedAt, String opaqueHash);
+
+    boolean existsByOpaqueHashAndUserId(String opaqueHash, long userId);
+
 }

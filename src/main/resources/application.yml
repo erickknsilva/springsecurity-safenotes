@@ -14,13 +14,17 @@ spring:
     hibernate:
      ddl-auto: update
 
+  data:
+    redis:
+      host: localhost
+      port: 6379
+
 jwt:
   public:
     key: classpath:app.pub
   private:
     key: classpath:app.key
   issuer: safenotes
-  expires-in: 10000
+  expires-in: 240
   refresh:
     expires-in: 2592000
-

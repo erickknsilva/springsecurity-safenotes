@@ -10,8 +10,6 @@ import tech.buildrun.safenotes.repository.UserRepository;
 
 import java.util.UUID;
 
-import static java.util.UUID.fromString;
-
 @Service
 public class LoginService {
 

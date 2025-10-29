@@ -50,7 +50,7 @@ public class NotesController {
 
     @GetMapping("/{noteId}")
     @PreAuthorize("hasAuthority('SCOPE_NOTE:READ') and @noteAuthz.hasAccessToNote(#jwt, #noteId)")
-    @ResponseStatus(HttpStatus.ACCEPTED)
+    @ResponseStatus(HttpStatus.OK)
     public NoteResponse noteRead(@P("jwt")@AuthenticationPrincipal Jwt jwt, @P("noteId") @PathVariable Long noteId ){
 
         return noteService.noteRead(noteId);

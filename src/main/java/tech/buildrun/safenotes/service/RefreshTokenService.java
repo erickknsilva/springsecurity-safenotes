@@ -79,6 +79,7 @@ public class RefreshTokenService {
         if (rowsUpdate == 0) {
             logger.warn("Refresh token already revoked - security issue - revoking token family...");
             revokeTokenFamily(refreshToken.getFamilyId());
+            logger.info("Rows updated: {}", rowsUpdate);
             throw new RuntimeException("Refresh token already revoked");
         }
     }
